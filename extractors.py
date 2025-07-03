@@ -1,41 +1,53 @@
 import subprocess
 import json
+import re
 
 def extract_with_ollama(html: str) -> list[dict]:
     """
-    Sends the HTML content to Ollama LLM and returns parsed JSON structured news articles.
+    Extract structured news articles using Ollama.
+    Only return JSON array parsed from the model's output.
     """
 
-    # Prepare your prompt for Ollama
     prompt = f"""
-			You are an intelligent content extractor. Given the raw HTML of a news page,
-			extract news articles as JSON with fields: title, description, time, image, video.
+			ONLY return a valid JSON array of news articles extracted from the following HTML.
+			DO NOT explain. DO NOT use markdown. DO NOT provide code.
 
-			Return only valid JSON.
+			Expected format:
+			[
+				{{
+					"title": "...",
+					"description": "...",
+					"time": "...",
+					"image": "...",
+					"video": "..."
+				}},
+				...
+			]
 
-			HTML:
-			```html
+			Here is the HTML:
 			{html}
-			```"""
+			"""
 
-    # Run Ollama CLI as subprocess, send prompt to stdin and capture stdout
     try:
         process = subprocess.run(
-            ["ollama", "run", "llama2"],  # replace "llama2" with your model name
-            input=prompt.encode('utf-8'),
+            ["ollama", "run", "mistral"],  # Replace with your model name
+            input=prompt.encode("utf-8"),
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            check=True
+            check=True,
         )
-        output = process.stdout.decode('utf-8').strip()
+        output = process.stdout.decode("utf-8").strip()
 
-        # Debug print raw response (optional)
         print("🧠 Ollama raw response:")
         print(output)
 
-        # Parse JSON from output
-        data = json.loads(output)
-        return data
+        # Try to extract just the JSON array
+        match = re.search(r"\[\s*{.*?}\s*\]", output, re.DOTALL)
+        if match:
+            json_str = match.group(0)
+            return json.loads(json_str)
+
+        print("❌ No valid JSON array found in Ollama output.")
 
     except subprocess.CalledProcessError as e:
         print(f"❌ Ollama subprocess failed: {e.stderr.decode()}")
@@ -45,4 +57,3 @@ def extract_with_ollama(html: str) -> list[dict]:
         print(f"❌ Unexpected error: {e}")
 
     return []
-

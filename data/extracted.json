@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "title": "দ্য মিরর এশিয়া - Bangladeshi news portal",
+    "description": "দ্য মিরর এশিয়া - সত্য প্রকাশে অবিচল",
+    "time": "N/A",
+    "image": "https://bangla.themirrorasia.net/assets/importent_images/logo.png",
+    "video": "N/A"
+  },
+  {
+    "title": "Breaking: BNP demands for neutral caretaker government in 12th national election",
+    "description": "BNP has demanded a neutral caretaker government for the 12th national election of Bangladesh. The party's standing committee made the demand at a press conference held on Saturday.",
+    "time": "January 24, 2023",
+    "image": "https://bangla.themirrorasia.net/assets/images/2023-01-24/bd_news_1674589783.jpg",
+    "video": "N/A"
+  },
+  {
+    "title": "Ronaldo's Portugal faces Morocco in World Cup quarterfinals",
+    "description": "Cristiano Ronaldo and his Portugal team will face Morocco in the World Cup quarterfinals on Saturday. The match is scheduled to begin at 17:00 local time.",
+    "time": "December 9, 2022",
+    "image": "https://bangla.themirrorasia.net/assets/images/2022-12-09/world_cup_quarterfinals_1670648537.jpg",
+    "video": "N/A"
+  }
+]

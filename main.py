@@ -16,16 +16,16 @@ async def main():
         try:
             result = await crawler.arun(url=URL, config=run_config)
             html = result.html
-            shtml = html[:2000]  # only sending 2k characters for testing
+            # shtml = html[:2000]  # only sending 2k characters for testing
             print(f"✅ Fetched HTML ({len(html)} characters)")
-            print(html)
+            # print(html)
         except Exception as e:
             print(f"❌ Failed to crawl the page: {e}")
             return
 
     # 🧠 Run Ollama-based extractor
     print("🔍 Extracting articles using Ollama...")
-    articles = extract_with_ollama(shtml)
+    articles = extract_with_ollama(html)
 
     if articles:
         os.makedirs("data", exist_ok=True)
